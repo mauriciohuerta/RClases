@@ -74,7 +74,7 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
       li.tb <- li
       ls.tb <- ls
     }
-    limits <- paste(paste(rep("[", k),apply(data.frame(v1=li.tb, v2=ls.tb), MARGIN = 1, FUN = paste, collapse=";"), sep=""), c(rep("[", (k-1)),"]"), sep="")
+    limits <- paste(paste(rep("[", k),apply(data.frame(v1=li.tb, v2=ls.tb), MARGIN = 1, FUN = paste, collapse=" ; "), sep=""), c(rep("[", (k-1)),"]"), sep="")
     tabla <- data.frame(IntervaloClase = limits, mi = mi)
     breaks <- sort(as.numeric(unique(c(li.tb[-1], ls.tb[-k], min(datos), max(datos)))))
     fa <- data.frame(ni = hist(datos, breaks = breaks, plot = FALSE)$counts)
