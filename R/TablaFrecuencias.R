@@ -1,4 +1,4 @@
-TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi = TRUE, Fi = TRUE, n.intervalos = "sturges", round = NULL){
+TablaFrecuencias <-function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi = TRUE, Fi = TRUE, n.intervalos = "sturges", round = NULL){
   if(!is.logical(intervalos) & !is.null(intervalos)){
     stop("El argumento 'intervalos' debe tener el valor 'TRUE' o 'FALSE'")
   }
