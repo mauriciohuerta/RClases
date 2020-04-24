@@ -14,12 +14,12 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
   if(!is.logical(Fi) & !is.null(Fi)){
     stop("El argumento 'Fi' debe tener el valor 'TRUE' o 'FALSE'")
   }
-  if(!is.numeric(datos) & !is.character(datos) & !is.data.frame(datos)){
+  if(!is.numeric(datos) & !is.character(datos)){
     class <- class(datos)
-    stop(paste("La clase del argumento 'datos' debe ser numérica o de carácteres.\n  La clase de 'datos' es ", class, "\n  Considere usar los comandos 'as.numeric(datos)' o 'as.character(datos)', según sea el caso",sep=""))
+    stop(paste("La clase del argumento 'datos' debe ser numerica o de caracteres.\n  La clase de 'datos' es ", class, "\n  Considere usar los comandos 'as.numeric(datos)' o 'as.character(datos)', segun sea el caso",sep=""))
   }
   if(length(n.intervalos) != 1){
-    stop("El argumento 'n.intervalos' debe contener sólo un elemento.")
+    stop("El argumento 'n.intervalos' debe contener solo un elemento.")
   }
   if(is.numeric(n.intervalos)){
     if((n.intervalos - floor(n.intervalos)) !=0){
@@ -27,10 +27,10 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
     }
   }
   if((n.intervalos!="sturges") & (!is.numeric(n.intervalos))){
-    stop("El argumento 'n.intervalos' debe ser un número entero o indicar 'sturges'")
+    stop("El argumento 'n.intervalos' debe ser un numero entero o indicar 'sturges'")
   }
   if((!is.numeric(round)) & (!is.null(round))){
-    stop("El argumento 'round' debe ser un número entero")
+    stop("El argumento 'round' debe ser un numero entero")
   }
   if(is.numeric(n.intervalos)){
     if((n.intervalos - floor(n.intervalos)) !=0){
@@ -40,14 +40,17 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
   if(is.null(intervalos)){
     if(is.numeric(datos)){
       intervalos = TRUE
-      message("- La clase de los datos es de tipo numérico. La variable será tratada automáticamente como cuantitativa y se calcularán los intervalos de clase.\n  - Si sus datos son cualitativos considere cambiar la clase del objeto a cadena de carácteres usando el comando 'as.character(datos)'.\n  - Si Ud desea evitar que se generen intervalos use el argumento 'intervalos = FALSE'.\n")
+      message("- La clase de los datos es de tipo numerico. La variable sera tratada automaticamente como cuantitativa y se calcularan los intervalos de clase.\n  - Si sus datos son cualitativos considere cambiar la clase del objeto a cadena de caracteres usando el comando 'as.character(datos)'.\n  - Si Ud desea evitar que se generen intervalos use el argumento 'intervalos = FALSE'.\n")
     }
   }
   if(is.null(intervalos)){
     if(is.character(datos)){
       intervalos = FALSE
-      message("- La clase de los datos es de tipo cadena de carácteres. La variable será tratada automáticamente como cualitativa y se omitirán los intervalos de clase.\n  - Si sus datos son cuantitativos considere cambiar la clase del objeto a numérico usando el comando 'as.numeric(datos)'.\n")
+      message("- La clase de los datos es de tipo cadena de caracteres. La variable sera tratada automaticamente como cualitativa y se omitiran los intervalos de clase.\n  - Si sus datos son cuantitativos considere cambiar la clase del objeto a numerico usando el comando 'as.numeric(datos)'.\n")
     }
+  }
+  if((intervalos == TRUE) & (!is.numeric(datos))){
+    stop("El argumento 'intervalos' solo puede tomar el valor 'FALSE' cuando datos es de tipo cadena de caracteres")
   }
   if(intervalos){
     n <- length(datos)
