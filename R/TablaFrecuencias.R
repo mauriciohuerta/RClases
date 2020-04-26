@@ -1,4 +1,5 @@
 TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi = TRUE, Fi = TRUE, n.intervalos = "sturges", round = NULL){
+  if(missing(datos)){stop("El argumento 'datos' esta vacio. Ingrese el valor de los datos a tabular")}
   if(!is.logical(intervalos) & !is.null(intervalos)){
     stop("El argumento 'intervalos' debe tener el valor 'TRUE' o 'FALSE'")
   }
@@ -19,11 +20,11 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
     stop(paste("La clase del argumento 'datos' debe ser numerica o de caracteres.\n  La clase de 'datos' es ", class, "\n  Considere usar los comandos 'as.numeric(datos)' o 'as.character(datos)', segun sea el caso",sep=""))
   }
   if(length(n.intervalos) != 1){
-    stop("El argumento 'n.intervalos' debe contener solo un elemento.")
+    stop("El argumento 'n.intervalos' debe contener solo un elemento")
   }
   if(is.numeric(n.intervalos)){
     if((n.intervalos - floor(n.intervalos)) !=0){
-      stop("El argumento 'n.intervalos' debe ser entero.")
+      stop("El argumento 'n.intervalos' debe ser entero")
     }
   }
   if((n.intervalos!="sturges") & (!is.numeric(n.intervalos))){
@@ -34,24 +35,25 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
   }
   if(is.numeric(n.intervalos)){
     if((n.intervalos - floor(n.intervalos)) !=0){
-      stop("El argumento 'round' debe ser entero.")
+      stop("El argumento 'round' debe ser entero")
     }
   }
   if(is.null(intervalos)){
     if(is.numeric(datos)){
       intervalos = TRUE
-      message("- La clase de los datos es de tipo numerico. La variable sera tratada automaticamente como cuantitativa y se calcularan los intervalos de clase.\n  - Si sus datos son cualitativos considere cambiar la clase del objeto a cadena de caracteres usando el comando 'as.character(datos)'.\n  - Si Ud desea evitar que se generen intervalos use el argumento 'intervalos = FALSE'.\n")
+      message("- La clase de los datos es de tipo numerico. La variable sera tratada automaticamente como cuantitativa y se calcularan los intervalos de clase.\n  - Si sus datos son cualitativos considere cambiar la clase del objeto a cadena de caracteres usando el comando 'as.character(datos)'.\n  - Si Ud desea evitar que se generen intervalos use el argumento 'intervalos = FALSE'\n")
     }
   }
   if(is.null(intervalos)){
     if(is.character(datos)){
       intervalos = FALSE
-      message("- La clase de los datos es de tipo cadena de caracteres. La variable sera tratada automaticamente como cualitativa y se omitiran los intervalos de clase.\n  - Si sus datos son cuantitativos considere cambiar la clase del objeto a numerico usando el comando 'as.numeric(datos)'.\n")
+      message("- La clase de los datos es de tipo cadena de caracteres. La variable sera tratada automaticamente como cualitativa y se omitiran los intervalos de clase.\n  - Si sus datos son cuantitativos considere cambiar la clase del objeto a numerico usando el comando 'as.numeric(datos)'\n")
     }
   }
   if((intervalos == TRUE) & (!is.numeric(datos))){
     stop("El argumento 'intervalos' solo puede tomar el valor 'FALSE' cuando datos es de tipo cadena de caracteres")
   }
+  resultados <- list()
   if(intervalos){
     n <- length(datos)
     r <- max(datos) - min(datos)
@@ -76,8 +78,8 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
     }
     limits <- paste(paste(rep("[", k),apply(data.frame(v1=li.tb, v2=ls.tb), MARGIN = 1, FUN = paste, collapse=" ; "), sep=""), c(rep("[", (k-1)),"]"), sep="")
     tabla <- data.frame(IntervaloClase = limits, mi = mi)
-    breaks <- sort(as.numeric(unique(c(li.tb[-1], ls.tb[-k], min(datos), max(datos)))))
-    fa <- data.frame(ni = hist(datos, breaks = breaks, plot = FALSE)$counts)
+    resultados$breaks <- sort(as.numeric(unique(c(li.tb[-1], ls.tb[-k], min(datos), max(datos)))))
+    fa <- data.frame(ni = hist(datos, breaks = resultados$breaks, plot = FALSE)$counts)
     aux <- data.frame(IntervaloClase = "Total", mi = "--")
   }
   if(!intervalos){
