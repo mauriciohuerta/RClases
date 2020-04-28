@@ -1,2 +1,4 @@
 exportPattern("^[[:alpha:]]+")
 importFrom("graphics", "hist")
+importFrom("utils", "data")
+importFrom("utils", "download.file")

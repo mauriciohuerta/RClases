@@ -76,6 +76,9 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
       li.tb <- li
       ls.tb <- ls
     }
+    resultados$LimiteInferior <- li.tb
+    resultados$LimiteSuperior <- ls.tb
+    resultados$MarcaDeClase <- mi
     limits <- paste(paste(rep("[", k),apply(data.frame(v1=li.tb, v2=ls.tb), MARGIN = 1, FUN = paste, collapse=" ; "), sep=""), c(rep("[", (k-1)),"]"), sep="")
     tabla <- data.frame(IntervaloClase = limits, mi = mi)
     resultados$breaks <- sort(as.numeric(unique(c(li.tb[-1], ls.tb[-k], min(datos), max(datos)))))
@@ -85,7 +88,7 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
   if(!intervalos){
     n <- length(datos)
     tab <- as.data.frame(table(datos))
-    tabla <- data.frame(Clase = tab[,1])
+    tabla <- data.frame(Clase = resultados$Clases <- tab[,1])
     k <- nrow(tabla)
     fa <- data.frame(ni = tab[,2])
     rm(tab)
@@ -97,20 +100,26 @@ TablaFrecuencias <- function(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi 
   fr <- data.frame(fi = formatC(fa$ni/n, digits = 4, format = "f"))
   fra <- data.frame(Fi = formatC(faa$Ni/n, digits = 4, format = "f"))
   if(ni){
+    resultados$ni <- fa$ni
     fa <- rbind(fa, data.frame(ni = n))
     tabla <- cbind(tabla, fa)
   }
   if(Ni){
+    resultados$Ni <- faa$Ni
     faa <- rbind(faa, data.frame(Ni = "--"))
     tabla <- cbind(tabla, faa)
   }
   if(fi){
+    resultados$fi <- fr$fi
     fr <- rbind(fr, data.frame(fi = formatC(1, digits = 4, format = "f")))
     tabla <- cbind(tabla, fr)
   }
   if(Fi){
+    resultados$Fi <- fra$Fi
     fra <- rbind(fra, data.frame(Fi = "--"))
     tabla <- cbind(tabla, fra)
   }
-  return(tabla)
+  resultados$Tabla <- tabla
+  print(tabla)
+  invisible(resultados)
 }
