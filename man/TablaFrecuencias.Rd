@@ -2,7 +2,8 @@
 \alias{TablaFrecuencias}
 \title{TablaFrecuencias}
 \usage{
-TablaFrecuencias(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi = TRUE, Fi = TRUE, n.intervalos = "sturges", round = NULL)
+TablaFrecuencias(datos, intervalos = NULL, ni = TRUE, Ni = TRUE, fi = TRUE, Fi = TRUE,
+                 n.intervalos = "sturges", round = NULL)
 }
 \arguments{
   \item{datos}{Un vector numerico o de caracteres.}

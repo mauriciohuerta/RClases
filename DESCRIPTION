@@ -1,7 +1,7 @@
 Package: RClases
 Type: Package
 Title: RClases: Un paquete de funciones usuales en un curso de estadística clásica
-Version: 0.1.004
+Version: 0.1.005
 Depends: R (>= 3.5.0)
 Author: Mauricio Huerta Aguiar
 Maintainer: Mauricio Huerta Aguiar <mauricio.huerta@pucv.cl>
